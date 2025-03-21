@@ -559,6 +559,35 @@
         opacity: 0;
       }
     }
+
+    /* Music Control */
+    .music-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 10;
+            background-color: rgba(52, 152, 219, 0.8);
+            color: white;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s;
+        }
+        
+        .music-control:hover {
+            transform: scale(1.1);
+            background-color: rgba(52, 152, 219, 1);
+        }
+        
+        .music-control i {
+            font-size: 20px;
+        }
+        
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
@@ -566,9 +595,15 @@
     <button class="flower-rain-sticky-button">✿ Flower Rain</button>
     <!-- Background Audio Element -->
     <audio id="background-music" loop>
-        <source src="https://cdnjs.cloudflare.com/ajax/libs/ion-sound/3.0.7/sounds/button_click.mp3" type="audio/mpeg">
+        <source src="https://firebasestorage.googleapis.com/v0/b/ctuacaccreditedboardinghouse.appspot.com/o/AlayTrabaho%2FPALAGI%20-%20TJxKZ%20%20LIVE%20SESSIONS.mp3?alt=media&token=934960aa-7a6d-41bd-b0b4-3605df4c0e81" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
+
+     <!-- Music Control Button -->
+     <div class="music-control" id="music-toggle">
+        <i class="fas fa-volume-up" id="music-icon"></i>
+    </div>
+    
 
     <!-- Cover Photo Section -->
     <section class="cover-section">
@@ -733,6 +768,40 @@
             const dots = Array.from(dotsNav.children);
             
             const slideWidth = slides[0].getBoundingClientRect().width;
+
+             // Music functionality
+             const music = document.getElementById('background-music');
+            const musicToggle = document.getElementById('music-toggle');
+            const musicIcon = document.getElementById('music-icon');
+            let isMusicPlaying = false;
+            
+            // Auto play music when page loads (with user interaction required)
+            document.body.addEventListener('click', function() {
+                if (!isMusicPlaying) {
+                    music.play().then(() => {
+                        isMusicPlaying = true;
+                        musicIcon.className = 'fas fa-volume-up';
+                    }).catch(error => {
+                        console.log("Audio play failed: ", error);
+                    });
+                }
+            }, { once: true });
+            
+            // Toggle music on/off
+            musicToggle.addEventListener('click', function() {
+                if (isMusicPlaying) {
+                    music.pause();
+                    musicIcon.className = 'fas fa-volume-mute';
+                    isMusicPlaying = false;
+                } else {
+                    music.play().then(() => {
+                        musicIcon.className = 'fas fa-volume-up';
+                        isMusicPlaying = true;
+                    }).catch(error => {
+                        console.log("Audio play failed: ", error);
+                    });
+                }
+            });
             
             // Arrange slides next to each other
             slides.forEach((slide, index) => {
