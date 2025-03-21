@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Michalle Anne Bonbon Website</title>
+    <style>
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            color: #333;
+            line-height: 1.6;
+            background-color: #f8f9fa;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Cover Photo Section */
+        .cover-section {
+            height: 350px;
+            position: relative;
+            overflow: hidden;
+            background-color: #2c3e50;
+        }
+        
+        .cover-photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.8;
+        }
+        
+        /* Profile Section */
+        .profile-section {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .profile-picture-container {
+            width: 180px;
+            height: 180px;
+            margin: -90px auto 20px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .profile-picture {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 6px solid #fff;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .profile-content {
+            padding: 0 20px;
+        }
+        
+        .profile-name {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: #2c3e50;
+            position: relative;
+            display: inline-block;
+            padding: 0 10px;
+            background-clip: text;
+            -webkit-background-clip: text;
+            overflow: hidden;
+        }
+
+        .profile-name::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                rgba(255, 192, 203, 0.4) 25%, 
+                rgba(147, 112, 219, 0.6) 50%, 
+                rgba(135, 206, 250, 0.4) 75%, 
+                transparent 100%);
+            animation: glowEffect 3s linear infinite;
+            z-index: -1;
+        }
+        
+        @keyframes glowEffect {
+            0% {
+                left: -100%;
+            }
+            100% {
+                left: 100%;
+            }
+        }
+        
+        .profile-title {
+            font-size: 1.3rem;
+            color: #7f8c8d;
+            margin-bottom: 15px;
+            line-height: 1.6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .profile-title img {
+            margin: 0 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .profile-bio {
+            max-width: 700px;
+            margin: 0 auto 25px;
+            color: #555;
+        }
+        
+        /* Skills Section */
+        .skills-section {
+            background-color: #fff;
+            padding: 60px 0;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2rem;
+            color: #2c3e50;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background-color: #3498db;
+            margin: 15px auto 0;
+        }
+        
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+        }
+        
+        .skill-item {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            width: 250px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .skill-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .skill-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+            color: #3498db;
+        }
+        
+        .skill-name {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+        
+        .skill-description {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+        }
+        
+        /* Gallery Section */
+        .gallery-section {
+            padding: 60px 0;
+        }
+        
+        .carousel-container {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+        
+        .carousel-slide {
+            min-width: 100%;
+            position: relative;
+        }
+        
+        .carousel-image {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+        }
+        
+        .carousel-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .carousel-nav {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        .carousel-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #bbb;
+            margin: 0 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .carousel-dot.active {
+            background-color: #3498db;
+        }
+        
+        .carousel-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(255, 255, 255, 0.7);
+            color: #333;
+            border: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 2;
+        }
+        
+        .carousel-button:hover {
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .carousel-button.prev {
+            left: 20px;
+        }
+        
+        .carousel-button.next {
+            right: 20px;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            padding: 30px 0;
+            text-align: center;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #34495e;
+            margin: 0 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        
+        .social-link:hover {
+            background-color: #3498db;
+            transform: translateY(-3px);
+        }
+        
+        .footer-text {
+            font-size: 0.9rem;
+            color: #bdc3c7;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .cover-section {
+                height: 250px;
+            }
+            
+            .profile-picture-container {
+                width: 150px;
+                height: 150px;
+                margin: -75px auto 20px;
+            }
+            
+            .profile-name {
+                font-size: 2rem;
+            }
+            
+            .skills-container {
+                gap: 20px;
+            }
+            
+            .skill-item {
+                width: calc(50% - 20px);
+            }
+            
+            .carousel-image {
+                height: 350px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .profile-picture-container {
+                width: 120px;
+                height: 120px;
+                margin: -60px auto 15px;
+            }
+            
+            .profile-name {
+                font-size: 1.8rem;
+            }
+            
+            .skill-item {
+                width: 100%;
+            }
+            
+            .carousel-image {
+                height: 250px;
+            }
+            
+            .carousel-button {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+        }
+
+        /* Heart beat animation for love icons */
+        .heart-icon {
+            animation: heartBeat 1.5s ease infinite;
+            color: #e74c3c;
+        }
+        
+        @keyframes heartBeat {
+            0% { transform: scale(1); }
+            14% { transform: scale(1.3); }
+            28% { transform: scale(1); }
+            42% { transform: scale(1.3); }
+            70% { transform: scale(1); }
+        }
+
+        /* Image Zoom Styles */
+        .carousel-slide {
+            min-width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .image-container {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .carousel-image {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .zoom-icon {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: rgba(255, 255, 255, 0.7);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 3;
+        }
+        
+        .zoom-icon i {
+            font-size: 24px;
+            color: #333;
+        }
+        
+        .image-container:hover .zoom-icon {
+            opacity: 1;
+        }
+        
+        /* Modal Styles */
+        .zoom-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            overflow: auto;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+            margin: auto;
+            display: block;
+            animation: zoom 0.6s;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+        
+        .close-modal:hover {
+            color: #bbb;
+        }
+        
+        @keyframes zoom {
+            from {transform: scale(0)}
+            to {transform: scale(1)}
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .carousel-image {
+                height: 350px;
+            }
+            
+            .zoom-icon {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .zoom-icon i {
+                font-size: 20px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .carousel-image {
+                height: 250px;
+            }
+            
+            .zoom-icon {
+                width: 35px;
+                height: 35px;
+                top: 15px;
+                right: 15px;
+            }
+            
+            .zoom-icon i {
+                font-size: 18px;
+            }
+        }
+
+        .flower-rain-content {
+      padding: 20px;
+    }
+
+    .flower-rain-sticky-button {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 1000;
+      padding: 10px 15px;
+      background: linear-gradient(135deg, #ff7eb3, #ff65a3);
+      color: white;
+      border: none;
+      border-radius: 25px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(255, 105, 180, 0.3);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .flower-rain-sticky-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(255, 105, 180, 0.4);
+    }
+
+    .flower-rain-sticky-button:active {
+      transform: translateY(1px);
+      box-shadow: 0 2px 10px rgba(255, 105, 180, 0.3);
+    }
+
+    .flower-rain-petal {
+      position: fixed;
+      pointer-events: none;
+      z-index: 999;
+      opacity: 0.9;
+      animation: flower-rain-fall linear forwards;
+    }
+
+    @keyframes flower-rain-fall {
+      0% {
+        transform: translateY(-10px) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <button class="flower-rain-sticky-button">✿ Flower Rain</button>
+    <!-- Background Audio Element -->
+    <audio id="background-music" loop>
+        <source src="https://cdnjs.cloudflare.com/ajax/libs/ion-sound/3.0.7/sounds/button_click.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- Cover Photo Section -->
+    <section class="cover-section">
+        <img src="https://firebasestorage.googleapis.com/v0/b/ctuacaccreditedboardinghouse.appspot.com/o/AlayTrabaho%2F3c023c47-7862-416c-95db-50b3415bf813.jfif?alt=media&token=f21ac601-4b5f-4c44-ad46-04a26f20cae1" alt="Cover Photo" class="cover-photo">
+    </section>
+    
+     <!-- Profile Section -->
+    <section class="profile-section">
+        <div class="container">
+            <div class="profile-picture-container">
+                <img src="https://firebasestorage.googleapis.com/v0/b/ctuacaccreditedboardinghouse.appspot.com/o/AlayTrabaho%2F02be3f97-0029-4cad-9437-20f5e4097137%20(1).jfif?alt=media&token=1866cd6b-2929-4d43-bdb8-c94f5cfd0617" alt="Profile Picture" class="profile-picture">
+            </div>
+            <div class="profile-content">
+                <h1 class="profile-name">Wadey and Meeshy</h1>
+                <h2 class="profile-title">
+                    Love Across the Miles – a journey of patience, trust, and unwavering love. No matter the distance, love always finds a way.
+                    <img src="https://upload.wikimedia.org/wikipedia/en/a/ae/Flag_of_the_United_Kingdom.svg" 
+                         alt="UK Flag" width="30">
+                    <i class="fas fa-heart heart-icon"></i>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/9/99/Flag_of_the_Philippines.svg" 
+                         alt="Philippine Flag" width="30">
+                </h2>            
+                <p class="profile-bio">
+                    This website offers a glimpse into our journey—the laughter, milestones, and everything in between. To all LDR couples out there, stay strong and keep believing. Love always finds a way!
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section class="skills-section">
+        <div class="container">
+            <h2 class="section-title">Skills & Expertise</h2>
+            <div class="skills-container">
+                <div class="skill-item">
+                    <div class="skill-icon">💻</div>
+                    <h3 class="skill-name">Front-End Development</h3>
+                    <p class="skill-description">HTML5, CSS3, JavaScript, React, Vue.js</p>
+                </div>
+                
+                <div class="skill-item">
+                    <div class="skill-icon">🎨</div>
+                    <h3 class="skill-name">UI/UX Design</h3>
+                    <p class="skill-description">Figma, Adobe XD, User Research, Wireframing</p>
+                </div>
+                
+                <div class="skill-item">
+                    <div class="skill-icon">⚙️</div>
+                    <h3 class="skill-name">Back-End Development</h3>
+                    <p class="skill-description">Node.js, Express, MongoDB, SQL</p>
+                </div>
+                
+                <div class="skill-item">
+                    <div class="skill-icon">📱</div>
+                    <h3 class="skill-name">Responsive Design</h3>
+                    <p class="skill-description">Mobile-First, Cross-Browser Compatibility</p>
+                </div>
+            </div>
+        </div>
+    </section> 
+
+    <!-- Gallery Section - Modified with zoom functionality -->
+    <section class="gallery-section">
+        <div class="container">
+            <h2 class="section-title">Project Gallery</h2>
+            <div class="carousel-container">
+                <button class="carousel-button prev">&#10094;</button>
+                <button class="carousel-button next">&#10095;</button>
+                
+                <div class="carousel-track">
+                    <div class="carousel-slide">
+                        <div class="image-container">
+                            <img src="https://firebasestorage.googleapis.com/v0/b/ctuacaccreditedboardinghouse.appspot.com/o/AlayTrabaho%2F9f88658c-dcfa-4976-93a0-736a87768d05.jfif?alt=media&token=69ed36f6-f101-430d-8076-f1efe26a54e5" alt="Project 1" class="carousel-image">
+                            <div class="zoom-icon">
+                                <i class="fas fa-search-plus"></i>
+                            </div>
+                        </div>
+                        <div class="carousel-caption">
+                            <h3>E-Commerce Website</h3>
+                            <p>A fully responsive online store built with React and Node.js</p>
+                        </div>
+                    </div>
+                    
+                    <div class="carousel-slide">
+                        <div class="image-container">
+                            <img src="https://firebasestorage.googleapis.com/v0/b/ctuacaccreditedboardinghouse.appspot.com/o/AlayTrabaho%2F9f88658c-dcfa-4976-93a0-736a87768d05.jfif?alt=media&token=69ed36f6-f101-430d-8076-f1efe26a54e5" alt="Project 2" class="carousel-image">
+                            <div class="zoom-icon">
+                                <i class="fas fa-search-plus"></i>
+                            </div>
+                        </div>
+                        <div class="carousel-caption">
+                            <h3>Portfolio Template</h3>
+                            <p>Custom designed portfolio website with unique animations</p>
+                        </div>
+                    </div>
+                    
+                    <div class="carousel-slide">
+                        <div class="image-container">
+                            <img src="https://firebasestorage.googleapis.com/v0/b/ctuacaccreditedboardinghouse.appspot.com/o/AlayTrabaho%2F9f88658c-dcfa-4976-93a0-736a87768d05.jfif?alt=media&token=69ed36f6-f101-430d-8076-f1efe26a54e5" alt="Project 3" class="carousel-image">
+                            <div class="zoom-icon">
+                                <i class="fas fa-search-plus"></i>
+                            </div>
+                        </div>
+                        <div class="carousel-caption">
+                            <h3>Dashboard UI</h3>
+                            <p>Modern admin dashboard with data visualization</p>
+                        </div>
+                    </div>
+                    
+                    <div class="carousel-slide">
+                        <div class="image-container">
+                            <img src="https://firebasestorage.googleapis.com/v0/b/ctuacaccreditedboardinghouse.appspot.com/o/AlayTrabaho%2F9f88658c-dcfa-4976-93a0-736a87768d05.jfif?alt=media&token=69ed36f6-f101-430d-8076-f1efe26a54e5" alt="Project 4" class="carousel-image">
+                            <div class="zoom-icon">
+                                <i class="fas fa-search-plus"></i>
+                            </div>
+                        </div>
+                        <div class="carousel-caption">
+                            <h3>Mobile App UI</h3>
+                            <p>UI/UX design for a fitness tracking application</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="carousel-nav">
+                <div class="carousel-dot active"></div>
+                <div class="carousel-dot"></div>
+                <div class="carousel-dot"></div>
+                <div class="carousel-dot"></div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Add Modal for Image Zoom -->
+    <div id="imageModal" class="zoom-modal">
+        <span class="close-modal">&times;</span>
+        <img class="modal-content" id="zoomedImage">
+    </div>
+
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="social-links">
+                <a href="#" class="social-link">in</a>
+                <a href="#" class="social-link">gh</a>
+                <a href="#" class="social-link">tw</a>
+                <a href="#" class="social-link">ig</a>
+            </div>
+            <p class="footer-text">&copy; 2025 John Doe. All Rights Reserved.</p>
+        </div>
+    </footer>
+    
+    <script>
+        // Carousel Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const track = document.querySelector('.carousel-track');
+            const slides = Array.from(track.children);
+            const nextButton = document.querySelector('.next');
+            const prevButton = document.querySelector('.prev');
+            const dotsNav = document.querySelector('.carousel-nav');
+            const dots = Array.from(dotsNav.children);
+            
+            const slideWidth = slides[0].getBoundingClientRect().width;
+            
+            // Arrange slides next to each other
+            slides.forEach((slide, index) => {
+                slide.style.left = slideWidth * index + 'px';
+            });
+            
+            // Move to target slide
+            const moveToSlide = (track, currentSlide, targetSlide) => {
+                track.style.transform = 'translateX(-' + targetSlide.style.left + ')';
+                currentSlide.classList.remove('active');
+                targetSlide.classList.add('active');
+            };
+            
+            // Update dots
+            const updateDots = (currentDot, targetDot) => {
+                currentDot.classList.remove('active');
+                targetDot.classList.add('active');
+            };
+            
+            // When I click left, move slides to the left
+            prevButton.addEventListener('click', () => {
+                const currentSlide = track.querySelector('.active') || slides[0];
+                let prevSlide;
+                
+                if (!currentSlide.previousElementSibling) {
+                    prevSlide = slides[slides.length - 1];
+                } else {
+                    prevSlide = currentSlide.previousElementSibling;
+                }
+                
+                const currentDot = dotsNav.querySelector('.active');
+                let prevDot;
+                
+                if (!currentDot.previousElementSibling) {
+                    prevDot = dots[dots.length - 1];
+                } else {
+                    prevDot = currentDot.previousElementSibling;
+                }
+                
+                moveToSlide(track, currentSlide, prevSlide);
+                updateDots(currentDot, prevDot);
+            });
+            
+            // When I click right, move slides to the right
+            nextButton.addEventListener('click', () => {
+                const currentSlide = track.querySelector('.active') || slides[0];
+                let nextSlide;
+                
+                if (!currentSlide.nextElementSibling) {
+                    nextSlide = slides[0];
+                } else {
+                    nextSlide = currentSlide.nextElementSibling;
+                }
+                
+                const currentDot = dotsNav.querySelector('.active');
+                let nextDot;
+                
+                if (!currentDot.nextElementSibling) {
+                    nextDot = dots[0];
+                } else {
+                    nextDot = currentDot.nextElementSibling;
+                }
+                
+                moveToSlide(track, currentSlide, nextSlide);
+                updateDots(currentDot, nextDot);
+            });
+            
+            // When I click the nav indicators, move to that slide
+            dotsNav.addEventListener('click', e => {
+                const targetDot = e.target.closest('div');
+                
+                if (!targetDot) return;
+                
+                const currentSlide = track.querySelector('.active') || slides[0];
+                const currentDot = dotsNav.querySelector('.active');
+                const targetIndex = dots.findIndex(dot => dot === targetDot);
+                const targetSlide = slides[targetIndex];
+                
+                moveToSlide(track, currentSlide, targetSlide);
+                updateDots(currentDot, targetDot);
+            });
+            
+            // Set first slide as active
+            slides[0].classList.add('active');
+            
+            // Auto slide every 5 seconds
+            setInterval(() => {
+                nextButton.click();
+            }, 5000);
+        });
+
+         // Image Zoom Functionality
+         document.addEventListener('DOMContentLoaded', function() {
+            // Existing carousel code...
+            
+            // Add zoom functionality
+            const zoomIcons = document.querySelectorAll('.zoom-icon');
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('zoomedImage');
+            const closeBtn = document.querySelector('.close-modal');
+            
+            // When the user clicks on a zoom icon
+            zoomIcons.forEach(icon => {
+                icon.addEventListener('click', function(e) {
+                    e.stopPropagation(); // Prevent carousel navigation
+                    const img = this.parentElement.querySelector('.carousel-image');
+                    modal.style.display = 'flex';
+                    modalImg.src = img.src;
+                });
+            });
+            
+            // Close the modal when the user clicks on the 'x'
+            closeBtn.addEventListener('click', function() {
+                modal.style.display = 'none';
+            });
+            
+            // Close the modal when user clicks outside the image
+            window.addEventListener('click', function(event) {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+            
+            // Close the modal with escape key
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape') {
+                    modal.style.display = 'none';
+                }
+            });
+        });
+
+        const button = document.querySelector('.flower-rain-sticky-button');
+    let isAnimating = false;
+    
+    // Flower emojis and colors
+    const flowers = ['🌸', '🌼', '🌺', '🌻', '🌹', '💮', '🏵️', '🌷'];
+    const colors = ['#ff7eb3', '#ff65a3', '#e83e8c', '#ff9aa2', '#ffb7b2', '#ffd1dc', '#ffeadb', '#ffc8dd'];
+    
+    button.addEventListener('click', () => {
+      if (isAnimating) return;
+      
+      isAnimating = true;
+      createFlowerRain();
+      
+      // Disable the animation for 3 seconds
+      setTimeout(() => {
+        isAnimating = false;
+      }, 3000);
+    });
+    
+    function createFlowerRain() {
+      // Create 30 flowers
+      for (let i = 0; i < 30; i++) {
+        setTimeout(() => {
+          const flower = document.createElement('div');
+          flower.className = 'flower-rain-petal';
+          
+          // Randomly select flower and color
+          const randomFlower = flowers[Math.floor(Math.random() * flowers.length)];
+          const randomColor = colors[Math.floor(Math.random() * colors.length)];
+          
+          // Set flower properties
+          flower.innerHTML = randomFlower;
+          flower.style.fontSize = `${Math.random() * 20 + 20}px`;
+          flower.style.color = randomColor;
+          flower.style.left = `${Math.random() * window.innerWidth}px`;
+          flower.style.top = '0';
+          
+          // Set animation duration randomly between 2-3 seconds
+          const duration = Math.random() * 1 + 2;
+          flower.style.animationDuration = `${duration}s`;
+          
+          // Add to body
+          document.body.appendChild(flower);
+          
+          // Remove from DOM after animation
+          setTimeout(() => {
+            document.body.removeChild(flower);
+          }, duration * 1000);
+        }, i * 50); // Stagger the creation of flowers
+      }
+    }
+    </script>
+</body>
+</html>
