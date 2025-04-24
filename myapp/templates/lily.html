@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magical Lily of the Valley</title>
+    <style>
+        :root {
+            --primary-color: #1b5e20;
+            --accent-color: #e8f5e9;
+            --light-green: #81c784;
+            --flower-white: #fff;
+            --pale-yellow: #ffecb3;
+            --light-purple: #e1bee7;
+            --dark-purple: #9c27b0;
+            --soft-pink: #f8bbd0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #e8f5e9, #c8e6c9, #b9f6ca);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .background {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            animation: float 10s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.8;
+            }
+            90% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-100px) scale(1);
+                opacity: 0;
+            }
+        }
+
+        .garden-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            height: 100vh;
+            max-height: 600px;
+            margin: 0 auto;
+            z-index: 10;
+        }
+
+        .title {
+            text-align: center;
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            position: absolute;
+            top: 20px;
+            width: 100%;
+            z-index: 100;
+        }
+
+        .ground {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 100px;
+            background: linear-gradient(to bottom, #4caf50, #2e7d32);
+            border-radius: 50% 50% 0 0 / 20% 20% 0 0;
+            box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.1);
+            z-index: 20;
+        }
+
+        .lily-field {
+            position: absolute;
+            bottom: 60px;
+            left: 0;
+            width: 100%;
+            height: 300px;
+            display: flex;
+            justify-content: space-around;
+            z-index: 30;
+        }
+
+        .lily-plant {
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            transform-origin: bottom center;
+        }
+
+        .lily-plant:hover {
+            transform: scale(1.05);
+        }
+
+        .stem {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 150px;
+            background: linear-gradient(to top, #4caf50, #7cb342);
+            border-radius: 6px;
+            z-index: 5;
+        }
+
+        .leaf {
+            position: absolute;
+            width: 80px;
+            height: 25px;
+            background: linear-gradient(to bottom, #7cb342, #558b2f);
+            border-radius: 50% 50% 50% 50% / 80% 80% 20% 20%;
+            z-index: 6;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transform-origin: 0% 50%;
+        }
+
+        .leaf-left {
+            transform: rotate(-40deg) skew(10deg, 10deg);
+            left: -30px;
+            bottom: 80px;
+        }
+
+        .leaf-right {
+            transform: rotate(40deg) skew(-10deg, -10deg);
+            left: 30px;
+            bottom: 60px;
+            width: 90px;
+        }
+
+        .flower-head {
+            position: absolute;
+            bottom: 140px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 10;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .bell {
+            position: relative;
+            width: 18px;
+            height: 22px;
+            background-color: var(--flower-white);
+            border-radius: 50% 50% 45% 45%;
+            margin: 2px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            opacity: 0.95;
+            transform-origin: center bottom;
+        }
+
+        .bell::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 6px;
+            background-color: var(--pale-yellow);
+            border-radius: 50%;
+        }
+
+        .row {
+            display: flex;
+            justify-content: center;
+        }
+
+        .info-panel {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            width: 90%;
+            max-width: 500px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(241, 248, 233, 0.95));
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            z-index: 100;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .info-panel h2 {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .info-panel p {
+            color: #333;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .info-panel img {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+            border-radius: 10px;
+            margin: 1rem 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .info-panel img:hover {
+            transform: scale(1.02);
+        }
+
+        .close-btn {
+            background: linear-gradient(135deg, var(--primary-color), #2e7d32);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-top: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .close-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .fact-bubble {
+            position: absolute;
+            padding: 10px 15px;
+            background-color: var(--light-purple);
+            color: #333;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            max-width: 200px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            transition: all 0.5s ease;
+            z-index: 50;
+        }
+
+        .blur-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(5px);
+            opacity: 0;
+            z-index: 90;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+        }
+
+        .butterfly {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            z-index: 40;
+            pointer-events: none;
+        }
+
+        .butterfly-wing {
+            position: absolute;
+            width: 15px;
+            height: 20px;
+            background-color: var(--soft-pink);
+            border-radius: 50% 50% 50% 50% / 80% 80% 20% 20%;
+            opacity: 0.8;
+            animation: flap 0.2s alternate infinite ease-in-out;
+        }
+
+        .butterfly-wing.left {
+            left: -7px;
+            transform-origin: right center;
+        }
+
+        .butterfly-wing.right {
+            left: 7px;
+            transform-origin: left center;
+        }
+
+        .butterfly-body {
+            position: absolute;
+            width: 4px;
+            height: 15px;
+            background-color: #9e9e9e;
+            top: 2px;
+            left: 8px;
+            border-radius: 2px;
+        }
+
+        @keyframes flap {
+            0% {
+                transform: rotateY(0deg);
+            }
+            100% {
+                transform: rotateY(60deg);
+            }
+        }
+
+        .season-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+        }
+
+        .season-label {
+            margin-right: 10px;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        .toggle-btn {
+            background: linear-gradient(135deg, var(--primary-color), #2e7d32);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .toggle-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .winter .ground {
+            background: linear-gradient(to bottom, #eceff1, #cfd8dc);
+        }
+
+        .winter {
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb, #90caf9);
+        }
+
+        .winter .particle {
+            background-color: white;
+            border-radius: 50%;
+        }
+
+        .summer {
+            background: linear-gradient(135deg, #fffde7, #fff9c4, #ffecb3);
+        }
+
+        .summer .ground {
+            background: linear-gradient(to bottom, #8bc34a, #689f38);
+        }
+
+        .fall {
+            background: linear-gradient(135deg, #fff3e0, #ffe0b2, #ffcc80);
+        }
+
+        .fall .ground {
+            background: linear-gradient(to bottom, #bf360c, #8d6e63);
+        }
+
+        .tooltip {
+            position: absolute;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 200;
+        }
+
+        .controls {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+        }
+
+        .control-btn {
+            background: linear-gradient(135deg, var(--dark-purple), var(--light-purple));
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 5px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .control-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .active-lily {
+            transform: scale(1.2);
+            z-index: 50;
+        }
+
+        /* Responsive Media Queries */
+@media (max-width: 1200px) {
+    .garden-container {
+        max-width: 90%;
+    }
+    
+    .title {
+        font-size: 2.2rem;
+    }
+}
+
+@media (max-width: 992px) {
+    .garden-container {
+        max-height: 500px;
+    }
+    
+    .title {
+        font-size: 2rem;
+        top: 15px;
+    }
+    
+    .season-toggle {
+        top: 15px;
+        right: 15px;
+    }
+    
+    .info-panel {
+        max-width: 450px;
+        padding: 25px;
+    }
+}
+
+@media (max-width: 768px) {
+    .garden-container {
+        max-height: 450px;
+    }
+    
+    .title {
+        font-size: 1.8rem;
+        top: 10px;
+    }
+    
+    .lily-field {
+        bottom: 40px;
+    }
+    
+    .stem {
+        height: 120px;
+    }
+    
+    .flower-head {
+        bottom: 110px;
+    }
+    
+    .leaf {
+        width: 60px;
+        height: 20px;
+    }
+    
+    .leaf-left {
+        left: -20px;
+        bottom: 60px;
+    }
+    
+    .leaf-right {
+        left: 20px;
+        bottom: 45px;
+        width: 70px;
+    }
+    
+    .info-panel {
+        width: 90%;
+        max-width: 400px;
+        padding: 20px;
+    }
+    
+    .info-panel h2 {
+        font-size: 1.5rem;
+    }
+    
+    .info-panel p {
+        font-size: 0.95rem;
+    }
+    
+    .season-toggle {
+        top: 10px;
+        right: 10px;
+    }
+    
+    .season-label {
+        font-size: 0.9rem;
+    }
+    
+    .toggle-btn {
+        padding: 6px 12px;
+        font-size: 0.85rem;
+    }
+    
+    .controls {
+        bottom: 15px;
+        right: 15px;
+    }
+    
+    .control-btn {
+        width: 35px;
+        height: 35px;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .title {
+        font-size: 1.5rem;
+    }
+    
+    .garden-container {
+        max-height: 400px;
+    }
+    
+    .lily-field {
+        bottom: 30px;
+    }
+    
+    .ground {
+        height: 80px;
+    }
+    
+    .stem {
+        width: 5px;
+        height: 100px;
+    }
+    
+    .flower-head {
+        bottom: 95px;
+    }
+    
+    .bell {
+        width: 15px;
+        height: 18px;
+    }
+    
+    .leaf {
+        width: 50px;
+        height: 18px;
+    }
+    
+    .leaf-left {
+        left: -15px;
+        bottom: 50px;
+    }
+    
+    .leaf-right {
+        left: 15px;
+        bottom: 40px;
+        width: 55px;
+    }
+    
+    .info-panel {
+        width: 95%;
+        padding: 15px;
+    }
+    
+    .info-panel h2 {
+        font-size: 1.3rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .info-panel p {
+        font-size: 0.9rem;
+        margin-bottom: 0.7rem;
+        line-height: 1.4;
+    }
+    
+    .info-panel img {
+        margin: 0.7rem 0;
+    }
+    
+    .close-btn {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+    }
+    
+    .season-toggle {
+        top: 10px;
+        right: 10px;
+    }
+    
+    .season-label {
+        font-size: 0.8rem;
+        margin-right: 5px;
+    }
+    
+    .toggle-btn {
+        padding: 5px 10px;
+        font-size: 0.8rem;
+    }
+    
+    .controls {
+        bottom: 10px;
+        right: 10px;
+    }
+    
+    .control-btn {
+        width: 30px;
+        height: 30px;
+        font-size: 0.9rem;
+        margin: 3px;
+    }
+    
+    .fact-bubble {
+        max-width: 150px;
+        font-size: 0.8rem;
+        padding: 8px 12px;
+    }
+}
+
+@media (max-width: 400px) {
+    .title {
+        font-size: 1.3rem;
+    }
+    
+    .garden-container {
+        max-height: 350px;
+    }
+    
+    .lily-plant {
+        transform: scale(0.8);
+    }
+    
+    .lily-plant:hover {
+        transform: scale(0.85);
+    }
+    
+    .active-lily {
+        transform: scale(0.9);
+    }
+    
+    .info-panel h2 {
+        font-size: 1.2rem;
+    }
+    
+    .info-panel p {
+        font-size: 0.85rem;
+    }
+    
+    .close-btn {
+        padding: 7px 14px;
+        font-size: 0.85rem;
+    }
+}
+
+/* Height-based media queries for shorter screens */
+@media (max-height: 700px) {
+    .garden-container {
+        max-height: 450px;
+    }
+    
+    .ground {
+        height: 70px;
+    }
+    
+    .info-panel {
+        max-height: 80vh;
+        overflow-y: auto;
+    }
+}
+
+@media (max-height: 500px) {
+    .garden-container {
+        max-height: 350px;
+    }
+    
+    .title {
+        font-size: 1.4rem;
+        top: 5px;
+    }
+    
+    .stem {
+        height: 80px;
+    }
+    
+    .flower-head {
+        bottom: 75px;
+    }
+    
+    .ground {
+        height: 60px;
+    }
+    
+    .lily-field {
+        bottom: 20px;
+        height: 250px;
+    }
+    
+    .season-toggle {
+        top: 5px;
+        right: 5px;
+    }
+}
+
+/* Landscape mode for mobile */
+@media (max-height: 450px) and (orientation: landscape) {
+    .garden-container {
+        max-height: 300px;
+    }
+    
+    .title {
+        font-size: 1.2rem;
+        top: 5px;
+    }
+    
+    .lily-plant {
+        transform: scale(0.7);
+    }
+    
+    .lily-plant:hover {
+        transform: scale(0.75);
+    }
+    
+    .stem {
+        height: 70px;
+    }
+    
+    .flower-head {
+        bottom: 65px;
+    }
+    
+    .ground {
+        height: 50px;
+    }
+    
+    .lily-field {
+        bottom: 15px;
+        height: 200px;
+    }
+    
+    .info-panel {
+        max-height: 85vh;
+        overflow-y: auto;
+        padding: 12px;
+    }
+    
+    .season-toggle {
+        top: 5px;
+        right: 5px;
+    }
+    
+    .controls {
+        bottom: 5px;
+        right: 5px;
+    }
+}
+
+/* For very small screens */
+@media (max-width: 320px) {
+    .title {
+        font-size: 1.1rem;
+    }
+    
+    .info-panel h2 {
+        font-size: 1.1rem;
+    }
+    
+    .info-panel p {
+        font-size: 0.8rem;
+    }
+    
+    .close-btn {
+        padding: 6px 12px;
+        font-size: 0.8rem;
+    }
+    
+    .lily-plant {
+        transform: scale(0.7);
+    }
+    
+    .lily-plant:hover {
+        transform: scale(0.75);
+    }
+}
+
+        .bloom-animation {
+            animation: bloom 1s forwards;
+        }
+
+        @keyframes bloom {
+            0% {
+                transform: scale(0) rotate(0deg);
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1) rotate(5deg);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="{% url 'home' %}" style="color: white; cursor: pointer; z-index: 99999; display: inline-block; text-decoration: none; font-family: 'Poppins', sans-serif; padding: 8px 16px; position: absolute; top: 20px; left: 20px; background-color: rgba(88, 101, 242, 0.5); border-radius: 4px; font-weight: 500; backdrop-filter: blur(4px); box-shadow: 0 0 10px rgba(134, 147, 255, 0.3); transition: all 0.3s ease;">Go back</a>
+    <div class="background" id="background"></div>
+    <div class="blur-overlay" id="blurOverlay"></div>
+    <div class="tooltip" id="tooltip"></div>
+    
+    <div class="garden-container">
+        <h1 class="title">Magical Lily of the Valley</h1>
+        
+        <div class="season-toggle">
+            <span class="season-label">Season:</span>
+            <button class="toggle-btn" id="seasonToggle">Spring</button>
+        </div>
+        
+        <div class="lily-field" id="lilyField"></div>
+        <div class="ground"></div>
+        
+        <div class="info-panel" id="infoPanel">
+            <h2>Lily of the Valley</h2>
+            <img src="https://meadowmania.co.uk/cdn/shop/files/Untitleddesign_11.jpg?v=1702298163" alt="Lily of the Valley in bloom">
+            <p>Convallaria majalis, commonly known as Lily of the Valley, is a highly fragrant flowering plant. Its delicate, bell-shaped blooms have earned it the nickname "May bells."</p>
+            <p>Despite its beauty, this plant contains cardiac glycosides that make all parts highly poisonous if ingested.</p>
+            <p>In the language of flowers, it represents sweetness, humility, and a return to happiness.</p>
+            <button class="close-btn" id="closeBtn">Return to Garden</button>
+        </div>
+        
+        <div class="controls">
+            <button class="control-btn" id="addLily" title="Add a new lily plant">+</button>
+            <button class="control-btn" id="removeLily" title="Remove a lily plant">-</button>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const background = document.getElementById('background');
+            const lilyField = document.getElementById('lilyField');
+            const infoPanel = document.getElementById('infoPanel');
+            const closeBtn = document.getElementById('closeBtn');
+            const blurOverlay = document.getElementById('blurOverlay');
+            const seasonToggle = document.getElementById('seasonToggle');
+            const tooltip = document.getElementById('tooltip');
+            const addLilyBtn = document.getElementById('addLily');
+            const removeLilyBtn = document.getElementById('removeLily');
+            
+            // Create background particles
+            for (let i = 0; i < 40; i++) {
+                createParticle();
+            }
+            
+            // Initialize with 5 lily plants
+            for (let i = 0; i < 5; i++) {
+                createLilyPlant();
+            }
+            
+            // Create butterflies
+            for (let i = 0; i < 3; i++) {
+                createButterfly();
+            }
+            
+            // Event listeners
+            closeBtn.addEventListener('click', function() {
+                infoPanel.style.opacity = '0';
+                infoPanel.style.transform = 'translate(-50%, -50%) scale(0)';
+                blurOverlay.style.opacity = '0';
+                
+                setTimeout(() => {
+                    blurOverlay.style.pointerEvents = 'none';
+                }, 500);
+            });
+            
+            seasonToggle.addEventListener('click', function() {
+                const currentSeason = seasonToggle.textContent;
+                let newSeason;
+                
+                document.body.classList.remove('winter', 'summer', 'fall');
+                
+                switch(currentSeason) {
+                    case 'Spring':
+                        newSeason = 'Summer';
+                        document.body.classList.add('summer');
+                        break;
+                    case 'Summer':
+                        newSeason = 'Fall';
+                        document.body.classList.add('fall');
+                        break;
+                    case 'Fall':
+                        newSeason = 'Winter';
+                        document.body.classList.add('winter');
+                        break;
+                    case 'Winter':
+                        newSeason = 'Spring';
+                        break;
+                }
+                
+                seasonToggle.textContent = newSeason;
+                updateParticleAnimation(newSeason);
+            });
+            
+            addLilyBtn.addEventListener('click', function() {
+                if (document.querySelectorAll('.lily-plant').length < 10) {
+                    createLilyPlant();
+                }
+            });
+            
+            removeLilyBtn.addEventListener('click', function() {
+                const lilyPlants = document.querySelectorAll('.lily-plant');
+                if (lilyPlants.length > 1) {
+                    lilyField.removeChild(lilyPlants[lilyPlants.length - 1]);
+                }
+            });
+            
+            // Functions to create elements
+            function createLilyPlant() {
+                const lilyPlant = document.createElement('div');
+                lilyPlant.className = 'lily-plant';
+                
+                // Create stem
+                const stem = document.createElement('div');
+                stem.className = 'stem';
+                lilyPlant.appendChild(stem);
+                
+                // Create leaves
+                const leafLeft = document.createElement('div');
+                leafLeft.className = 'leaf leaf-left';
+                lilyPlant.appendChild(leafLeft);
+                
+                const leafRight = document.createElement('div');
+                leafRight.className = 'leaf leaf-right';
+                lilyPlant.appendChild(leafRight);
+                
+                // Create flower head with bells
+                const flowerHead = document.createElement('div');
+                flowerHead.className = 'flower-head';
+                
+                // Row 1
+                const row1 = document.createElement('div');
+                row1.className = 'row';
+                const bell1 = document.createElement('div');
+                bell1.className = 'bell';
+                row1.appendChild(bell1);
+                flowerHead.appendChild(row1);
+                
+                // Row 2
+                const row2 = document.createElement('div');
+                row2.className = 'row';
+                for (let i = 0; i < 2; i++) {
+                    const bell = document.createElement('div');
+                    bell.className = 'bell';
+                    row2.appendChild(bell);
+                }
+                flowerHead.appendChild(row2);
+                
+                // Row 3
+                const row3 = document.createElement('div');
+                row3.className = 'row';
+                for (let i = 0; i < 3; i++) {
+                    const bell = document.createElement('div');
+                    bell.className = 'bell';
+                    row3.appendChild(bell);
+                }
+                flowerHead.appendChild(row3);
+                
+                lilyPlant.appendChild(flowerHead);
+                
+                // Add plant to field at random position
+                lilyPlant.style.left = `${Math.random() * 80 + 10}%`;
+                lilyField.appendChild(lilyPlant);
+                
+                // Add animation to bells
+                const bells = lilyPlant.querySelectorAll('.bell');
+                bells.forEach((bell, index) => {
+                    setTimeout(() => {
+                        bell.classList.add('bloom-animation');
+                    }, 300 + index * 100);
+                });
+                
+                // Add click event for plant interaction
+                lilyPlant.addEventListener('click', function() {
+                    // Play gentle bell sound
+                    playBellSound();
+                    
+                    // Show the info panel with animation
+                    infoPanel.style.opacity = '1';
+                    infoPanel.style.transform = 'translate(-50%, -50%) scale(1)';
+                    
+                    // Show blur overlay 
+                    
+                    // Animate flower bells
+                    const bells = this.querySelectorAll('.bell');
+                    bells.forEach((bell, index) => {
+                        bell.style.transform = `translate(${(Math.random() * 40 - 20)}px, ${-Math.random() * 40}px) rotate(${Math.random() * 40 - 20}deg)`;
+                        bell.style.transitionDelay = `${index * 0.05}s`;
+                    });
+                    
+                    // Create floating fact bubble
+                    if (Math.random() > 0.5) {
+                        createFactBubble(this);
+                    }
+                });
+                
+                // Add hover tooltip
+                lilyPlant.addEventListener('mouseenter', function(e) {
+                    tooltip.textContent = "Click to learn about Lily of the Valley";
+                    tooltip.style.opacity = '1';
+                    updateTooltipPosition(e);
+                });
+                
+                lilyPlant.addEventListener('mousemove', updateTooltipPosition);
+                
+                lilyPlant.addEventListener('mouseleave', function() {
+                    tooltip.style.opacity = '0';
+                });
+                
+                return lilyPlant;
+            }
+            
+            function createParticle() {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                // Random position and size
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.animationDuration = `${Math.random() * 10 + 10}s`;
+                particle.style.animationDelay = `${Math.random() * 5}s`;
+                particle.style.width = `${Math.random() * 6 + 2}px`;
+                particle.style.height = particle.style.width;
+                
+                background.appendChild(particle);
+                return particle;
+            }
+            
+            function createButterfly() {
+                const butterfly = document.createElement('div');
+                butterfly.className = 'butterfly';
+                
+                // Create wings
+                const leftWing = document.createElement('div');
+                leftWing.className = 'butterfly-wing left';
+                butterfly.appendChild(leftWing);
+                
+                const rightWing = document.createElement('div');
+                rightWing.className = 'butterfly-wing right';
+                butterfly.appendChild(rightWing);
+                
+                // Create body
+                const body = document.createElement('div');
+                body.className = 'butterfly-body';
+                butterfly.appendChild(body);
+                
+                // Set initial position
+                butterfly.style.left = `${Math.random() * 80 + 10}%`;
+                butterfly.style.top = `${Math.random() * 60 + 20}%`;
+                
+                document.body.appendChild(butterfly);
+                
+                // Animate butterfly movement
+                animateButterfly(butterfly);
+                
+                return butterfly;
+            }
+            
+            function createFactBubble(plant) {
+                const facts = [
+                    "Lily of the Valley is the birth flower for the month of May.",
+                    "In Christian legend, these flowers sprang from Mary's tears.",
+                    "It's known as 'muguet' in France where it's given as a good luck charm on May 1st.",
+                    "All parts of this plant are highly toxic if ingested.",
+                    "Its fragrance is used in many high-end perfumes."
+                ];
+                
+                const factBubble = document.createElement('div');
+                factBubble.className = 'fact-bubble';
+                factBubble.textContent = facts[Math.floor(Math.random() * facts.length)];
+                
+                const plantRect = plant.getBoundingClientRect();
+                factBubble.style.left = `${plantRect.left + plantRect.width/2}px`;
+                factBubble.style.top = `${plantRect.top - 60}px`;
+                
+                document.body.appendChild(factBubble);
+                
+                setTimeout(() => {
+                    factBubble.style.opacity = '1';
+                    factBubble.style.transform = 'translateY(-20px)';
+                }, 100);
+                
+                setTimeout(() => {
+                    factBubble.style.opacity = '0';
+                    setTimeout(() => {
+                        if (factBubble.parentNode) {
+                            factBubble.parentNode.removeChild(factBubble);
+                        }
+                    }, 500);
+                }, 4000);
+            }
+            
+            // Animation functions
+            function animateButterfly(butterfly) {
+                const maxX = window.innerWidth - 50;
+                const maxY = window.innerHeight - 50;
+                
+                let targetX = Math.random() * maxX;
+                let targetY = Math.random() * maxY;
+                
+                const move = () => {
+                    const currentX = parseFloat(butterfly.style.left);
+                    const currentY = parseFloat(butterfly.style.top);
+                    
+                    // Calculate direction
+                    const dx = targetX - currentX;
+                    const dy = targetY - currentY;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    
+                    // If close to target, set new target
+                    if (distance < 5) {
+                        targetX = Math.random() * maxX;
+                        targetY = Math.random() * maxY;
+                    } else {
+                        // Move towards target
+                        const speed = 0.5;
+                        butterfly.style.left = `${currentX + dx / distance * speed}px`;
+                        butterfly.style.top = `${currentY + dy / distance * speed}px`;
+                    }
+                    
+                    requestAnimationFrame(move);
+                };
+                
+                move();
+            }
+            
+            function updateParticleAnimation(season) {
+                const particles = document.querySelectorAll('.particle');
+                
+                particles.forEach(particle => {
+                    // Change color based on season
+                    switch(season) {
+                        case 'Winter':
+                            particle.style.backgroundColor = 'white'; // Snowflakes
+                            break;
+                        case 'Summer':
+                            particle.style.backgroundColor = 'rgba(255, 255, 153, 0.7)'; // Pollen/sunlight
+                            break;
+                        case 'Fall':
+                            particle.style.backgroundColor = 'rgba(205, 133, 63, 0.7)'; // Fall leaves
+                            break;
+                        case 'Spring':
+                            particle.style.backgroundColor = 'rgba(255, 255, 255, 0.7)'; // Light particles
+                            break;
+                    }
+                });
+            }
+            
+            function updateTooltipPosition(e) {
+                tooltip.style.left = `${e.clientX + 10}px`;
+                tooltip.style.top = `${e.clientY + 10}px`;
+            }
+            
+            function playBellSound() {
+                // Create audio context
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                const audioCtx = new AudioContext();
+                
+                // Create oscillator
+                const oscillator = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
+                
+                // Connect nodes
+                oscillator.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+                
+                // Set parameters
+                oscillator.type = 'sine';
+                oscillator.frequency.value = 880; // A5
+                
+                // Envelope
+                gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
+                gainNode.gain.linearRampToValueAtTime(0.2, audioCtx.currentTime + 0.1);
+                gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 1.5);
+                
+                // Start and stop
+                oscillator.start();
+                oscillator.stop(audioCtx.currentTime + 1.5);
+            }
+        });
+    </script>
+</body>
+</html>
